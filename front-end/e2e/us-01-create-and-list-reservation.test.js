@@ -67,7 +67,7 @@ describe('US-01 - Create and list reservations - E2E', () => {
       });
 
       const [cancelButton] = await page.$x(
-        '//button[contains(translate(., 'ACDEFGHIJKLMNOPQRSTUVWXYZ', 'acdefghijklmnopqrstuvwxyz'), 'cancel')]'
+        '//button[contains(translate(., "ACDEFGHIJKLMNOPQRSTUVWXYZ", "acdefghijklmnopqrstuvwxyz"), "cancel")]'
       );
 
       if (!cancelButton) {
