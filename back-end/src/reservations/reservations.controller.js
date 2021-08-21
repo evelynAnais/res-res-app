@@ -15,12 +15,12 @@
 const service = require('./reservations.service')
 const asyncErrorBoundary = require('../errors/asyncErrorBoundary')
 const hasProperties = require("../errors/hasProperties");
-const hasRequiredProperties = hasProperties('reservation', 'who_said','approved');
+const hasRequiredProperties = hasProperties('reservation', '','');
 
 const VALID_PROPERTIES = [
   'reservation',
-  'who_said',
-  'approved',
+  '',
+  '',
 ];
 
 function hasOnlyValidProperties(req, res, next) {
