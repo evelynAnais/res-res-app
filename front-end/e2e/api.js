@@ -1,12 +1,12 @@
-const fetch = require("cross-fetch");
+const fetch = require('cross-fetch');
 
 const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
+  process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
 
 /**
  * Defines the default headers for these functions to work with `json-server`
  */
-const headers = { "Content-Type": "application/json" };
+const headers = { 'Content-Type': 'application/json' };
 
 /**
  * Fetch `json` from the specified URL and handle error status codes and ignore `AbortError`s
@@ -38,7 +38,7 @@ async function fetchJson(url, options, onCancel) {
     }
     return payload.data;
   } catch (error) {
-    if (error.name !== "AbortError") {
+    if (error.name !== 'AbortError') {
       console.error(error.stack);
       throw error;
     }
@@ -54,7 +54,7 @@ async function fetchJson(url, options, onCancel) {
 async function createReservation(reservation, signal) {
   const url = `${API_BASE_URL}/reservations`;
   const options = {
-    method: "POST",
+    method: 'POST',
     headers,
     body: JSON.stringify({ data: reservation }),
     signal,
@@ -70,7 +70,7 @@ async function createReservation(reservation, signal) {
 async function createTable(table, signal) {
   const url = `${API_BASE_URL}/tables`;
   const options = {
-    method: "POST",
+    method: 'POST',
     headers,
     body: JSON.stringify({ data: table }),
     signal,
@@ -81,7 +81,7 @@ async function createTable(table, signal) {
 async function seatReservation(reservation_id, table_id) {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
   const options = {
-    method: "PUT",
+    method: 'PUT',
     body: JSON.stringify({ data: { reservation_id } }),
     headers,
   };
