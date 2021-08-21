@@ -45,7 +45,7 @@ async function reservationExists(req, res, next) {
     res.locals.reservation = reservation;
     return next();
   }
-  next({ status: 404, message: `Quote cannot be found.` });
+  next({ status: 404, message: `Reservation cannot be found.` });
 }
 
 async function list(req, res) {
