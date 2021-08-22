@@ -1,7 +1,7 @@
 export default function ReservationCard({ reservation }) {
   return (
     <>
-      <div className="card" style={{'width': '18rem'}}>
+      <div className="card mt-3" style={{'width': '18rem'}}>
         <div className="card-header">
           {reservation?.first_name} {reservation?.last_name}
         </div>

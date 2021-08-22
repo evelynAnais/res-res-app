@@ -6,7 +6,8 @@ export default function ReservationList({ reservations }) {
   ))
   return(
     <>
-      {resList}
+      {resList.length ? resList : null} 
+      {!resList.length && <p>No reservations this date</p>}
     </>
   )
 } 
