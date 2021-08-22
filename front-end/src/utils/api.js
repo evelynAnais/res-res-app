@@ -70,8 +70,6 @@ export async function listReservations(params, signal) {
 
 
 export async function createReservation(reservation, signal) {
-  // There is a bug in json-server, if you post to /decks/:deckId/cards the associated deckId is a string
-  // and the card is not related to the deck because the data types of the ID's are different.
   const url = `${API_BASE_URL}/reservations`;
   const options = {
     method: "POST",
