@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useHistory } from "react-router";
 import { createReservation } from "../utils/api";
 
 export default function Form() {
   const [newReservation, setNewReservation] = useState({})
+  const history = useHistory()
   
   function handleChange({ target }) {
     let newValue = target.value;
@@ -18,13 +20,17 @@ export default function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
     createReservation(newReservation);
-    window.scrollTo(0,0);
+    history.push('/')
+  }
+
+  const handleCancel = (e) => {
+    history.push('/')
   }
 
   return (
     <div onSubmit={handleSubmit} className='container'>
       <form className='row d-flex'>
-        <label htmlFor='first_name' class='form-label'>
+        <label htmlFor='first_name' className='form-label'>
           First Name:
           <input 
             className='form-control mb-3'
@@ -94,12 +100,12 @@ export default function Form() {
           onChange={handleChange}
         />
       </label>
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <div  class="text-center">
+      <div className="container">
+        <div className="row">
+          <div className="col-xs-12">
+            <div  className="text-center">
               <button type="submit" className='btn btn-dark mr-3 ml-3'>Submit</button>
-              <button type="submit" className='btn btn-dark mr-3 ml-3'>Cancel</button>
+              <button type="button" onClick={handleCancel} className='btn btn-dark mr-3 ml-3'>Cancel</button>
             </div>
           </div>
         </div>

@@ -9,7 +9,7 @@ import ErrorAlert from '../layout/ErrorAlert';
  * @returns {JSX.Element}
  */
 function Dashboard({ date }) {
-  const [reservations, setReservations] = useState([]);
+  const [reservations, setReservations] = useState([]); // pass in an object here that looks like the data that you would recieve from the api
   const [reservationsError, setReservationsError] = useState(null);
 
   useEffect(loadDashboard, [date]);
