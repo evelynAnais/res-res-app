@@ -1,9 +1,18 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
 import { createReservation } from "../utils/api";
+import { today } from "../utils/date-time";
 
 export default function Form() {
-  const [newReservation, setNewReservation] = useState({})
+  const [newReservation, setNewReservation] = useState({
+    first_name: '',
+    last_name: '',
+    mobile_number: '',
+    reservation_date: today(),
+    reservation_time: '10:30',
+    people: 0,
+    status: 'booked',
+  })
   const history = useHistory()
   
   function handleChange({ target }) {
@@ -39,6 +48,7 @@ export default function Form() {
             name='first_name'
             value={newReservation.first_name}
             onChange={handleChange}
+            required={true}
           />
         </label>
         <label htmlFor='last_name'>
@@ -50,6 +60,7 @@ export default function Form() {
             name='last_name'
             value={newReservation.last_name}
             onChange={handleChange}
+            required={true}
           />
         </label>
       <label htmlFor='mobile_number'>
@@ -58,11 +69,12 @@ export default function Form() {
           className='form-control mb-3'
           type='tel'
           pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
+          placeholder='123-123-1233'
           id='mobile_number' 
           name='mobile_number'
-          placeholder='123-456-7890'
           value={newReservation.mobile_number}
           onChange={handleChange}
+          required={true}
         />
       </label>
       <label htmlFor='reservation_date'>
@@ -74,6 +86,7 @@ export default function Form() {
           name='reservation_date'
           value={newReservation.reservation_date}
           onChange={handleChange}
+          required={true}
         />
       </label>
       <label htmlFor='reservation_time'>
@@ -85,6 +98,7 @@ export default function Form() {
           name='reservation_time'
           value={newReservation.reservation_time}
           onChange={handleChange}
+          required={true}
         />
       </label>
       <label htmlFor='people'>
@@ -95,9 +109,9 @@ export default function Form() {
           id='people' 
           name='people'
           min='1'
-          placeholder='numeric'
           value={newReservation.people}
           onChange={handleChange}
+          required={true}
         />
       </label>
       <div className="container">
