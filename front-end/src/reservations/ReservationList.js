@@ -1,10 +1,12 @@
 import ReservationCard from "./ReservationCard";
 
-export default function ReservationList() {
+export default function ReservationList({ reservations }) {
+  const resList = reservations.map((reservation, reservation_id) => (
+    <ReservationCard key={reservation_id} reservation={reservation} />
+  ))
   return(
     <>
-    RES LIST
-    <ReservationCard />
-  </>
+      {resList}
+    </>
   )
 } 
