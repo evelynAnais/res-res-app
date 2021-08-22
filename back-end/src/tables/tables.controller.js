@@ -1,12 +1,12 @@
 const service = require('./tables.service')
 const asyncErrorBoundary = require('../errors/asyncErrorBoundary')
 const hasProperties = require("../errors/hasProperties");
-const hasRequiredProperties = hasProperties('table', '','');
+const hasRequiredProperties = hasProperties('table_name', 'capacity', 'reservation_id');
 
 const VALID_PROPERTIES = [
-  'table',
-  '',
-  '',
+  'table_name',
+  'capacity',
+  'reservation_id'
 ];
 
 function hasOnlyValidProperties(req, res, next) {

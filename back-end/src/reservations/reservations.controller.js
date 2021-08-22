@@ -1,26 +1,16 @@
-/**
- * List handler for reservation resources
- */
-// async function list(req, res) {
-//   res.json({
-//     data: [],
-//   });
-// }
-
-// module.exports = {
-//   list,
-// };
-
-
 const service = require('./reservations.service')
 const asyncErrorBoundary = require('../errors/asyncErrorBoundary')
 const hasProperties = require("../errors/hasProperties");
-const hasRequiredProperties = hasProperties('reservation', '','');
+const hasRequiredProperties = hasProperties('first_name', 'last_name', 'mobile_number', 'reservation_date', 'reservation_time', 'people', 'status',);
 
 const VALID_PROPERTIES = [
-  'reservation',
-  '',
-  '',
+  'first_name',
+  'last_name',
+  'mobile_number',
+  'reservation_date',
+  'reservation_time',
+  'people',
+  'status',
 ];
 
 function hasOnlyValidProperties(req, res, next) {
@@ -49,8 +39,20 @@ async function reservationExists(req, res, next) {
 }
 
 async function list(req, res) {
-  res.json({ data: await service.list() });
+  const { date, mobile_number } = req.query;
+
+  if (date) {
+    res.json({ data: await service.listByDate(date) });
+  } else if (mobile_number) {
+    res.json({ data: await service.search(mobile_number) });
+  } else {
+    res.json({ data: await service.list() });
+  }
 }
+
+// async function list(req, res) {
+//   res.json({ data: await service.list() });
+// }
 
 async function create(req, res) {
   const data = await service.create(req.body.data);
@@ -81,3 +83,17 @@ module.exports = {
   update: [asyncErrorBoundary(reservationExists), hasOnlyValidProperties, hasRequiredProperties, asyncErrorBoundary(update)],
   delete: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)]
 }
+
+
+/**
+ * List handler for reservation resources
+ */
+// async function list(req, res) {
+//   res.json({
+//     data: [],
+//   });
+// }
+
+// module.exports = {
+//   list,
+// };
