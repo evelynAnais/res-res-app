@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
 import { createReservation } from "../utils/api";
-import { today } from "../utils/date-time";
+import { formatAsDate, today } from "../utils/date-time";
 
 export default function Form() {
   const [newReservation, setNewReservation] = useState({
@@ -29,7 +29,7 @@ export default function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
     createReservation(newReservation);
-    history.push('/')
+    history.push(`/dashboard?date=${formatAsDate(newReservation.reservation_date)}`)
   }
 
   const handleCancel = (e) => {
@@ -37,7 +37,7 @@ export default function Form() {
   }
 
   return (
-    <div onSubmit={handleSubmit} className='container'>
+    <div className='container'>
       <form className='row d-flex'>
         <label htmlFor='first_name' className='form-label'>
           First Name:
@@ -118,7 +118,7 @@ export default function Form() {
         <div className="row">
           <div className="col-xs-12">
             <div  className="text-center">
-              <button type="submit" className='btn btn-dark mr-3 ml-3'>Submit</button>
+              <button type="submit" onClick={handleSubmit} className='btn btn-dark mr-3 ml-3'>Submit</button>
               <button type="button" onClick={handleCancel} className='btn btn-dark mr-3 ml-3'>Cancel</button>
             </div>
           </div>
