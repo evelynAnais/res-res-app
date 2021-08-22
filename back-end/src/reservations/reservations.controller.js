@@ -1,9 +1,16 @@
 const service = require('./reservations.service')
 const asyncErrorBoundary = require('../errors/asyncErrorBoundary')
 const hasProperties = require("../errors/hasProperties");
-const hasRequiredProperties = hasProperties('first_name', 'last_name', 'mobile_number', 'reservation_date', 'reservation_time', 'people', 'status',);
+const hasRequiredProperties = hasProperties('first_name', 'last_name', 'mobile_number', 'reservation_date', 'reservation_time', 'people');
 
 const VALID_PROPERTIES = [
+  // 'first_name',
+  // 'last_name',
+  // 'mobile_number',
+  // 'reservation_date',
+  // 'reservation_time',
+  // 'people',
+  // 'status',
   'first_name',
   'last_name',
   'mobile_number',
@@ -11,15 +18,16 @@ const VALID_PROPERTIES = [
   'reservation_time',
   'people',
   'status',
+  'reservation_id',
+  'created_at',
+  'updated_at'
 ];
 
 function hasOnlyValidProperties(req, res, next) {
   const { data = {} } = req.body;
-
   const invalidFields = Object.keys(data).filter(
     (field) => !VALID_PROPERTIES.includes(field)
   );
-
   if (invalidFields.length) {
     return next({
       status: 400,
@@ -29,6 +37,22 @@ function hasOnlyValidProperties(req, res, next) {
   next();
 }
 
+// function hasOnlyValidProperties(req, res, next) {
+//   const { data = {} } = req.body;
+
+//   const invalidFields = Object.keys(data).filter(
+//     (field) => !VALID_PROPERTIES.includes(field)
+//   );
+
+//   if (invalidFields.length) {
+//     return next({
+//       status: 400,
+//       message: `Invalid field(s): ${invalidFields.join(", ")}`,
+//     });
+//   }
+//   next();
+// }
+
 async function reservationExists(req, res, next) {
   const reservation = await service.read(req.params.reservationId);
   if (reservation) {
@@ -36,6 +60,32 @@ async function reservationExists(req, res, next) {
     return next();
   }
   next({ status: 404, message: `Reservation ${req.params.reservationId} cannot be found.` });
+}
+
+function validateDate(req, res, next) {
+  const { reservation_date } = req.body.data
+  const date = new Date(reservation_date)
+  if (date.getTime() === date.getTime()) {
+    return next();
+  }
+  next({ status: 400, message: `need valid reservation_date` });
+}
+
+function validateTime(req, res, next) {
+  const { reservation_time } = req.body.data
+  const time = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(reservation_time);
+  if (time) {
+    return next();
+  }
+  next({ status: 400, message: `need valid reservation_time` });
+}
+
+function validatePeople(req, res, next) {
+  const { people } = req.body.data
+  if (typeof people === 'number') {
+    return next ()
+  }
+  next({ status: 400, message: `people should be a number` });
 }
 
 async function list(req, res) {
@@ -74,7 +124,7 @@ async function destroy(req, res) {
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
-  create: [hasOnlyValidProperties, hasRequiredProperties, asyncErrorBoundary(create)],
+  create: [hasOnlyValidProperties, hasRequiredProperties, validatePeople, validateDate, validateTime, asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(reservationExists), read],
   update: [asyncErrorBoundary(reservationExists), hasOnlyValidProperties, hasRequiredProperties, asyncErrorBoundary(update)],
   delete: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)]
