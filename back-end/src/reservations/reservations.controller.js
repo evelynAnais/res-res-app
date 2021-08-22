@@ -35,7 +35,7 @@ async function reservationExists(req, res, next) {
     res.locals.reservation = reservation;
     return next();
   }
-  next({ status: 404, message: `Reservation cannot be found.` });
+  next({ status: 404, message: `Reservation ${req.params.reservationId} cannot be found.` });
 }
 
 async function list(req, res) {
@@ -49,10 +49,6 @@ async function list(req, res) {
     res.json({ data: await service.list() });
   }
 }
-
-// async function list(req, res) {
-//   res.json({ data: await service.list() });
-// }
 
 async function create(req, res) {
   const data = await service.create(req.body.data);
