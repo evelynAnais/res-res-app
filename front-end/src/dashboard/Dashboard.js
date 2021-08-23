@@ -65,9 +65,9 @@ function Dashboard({ date }) {
         </h4>
       </div>
       <div className='mb-3 ml-0'>
-        <button type="button" onClick={handlePreviousDate} data-testid="previous-date" className='btn btn-dark mr-3'>Previous</button>
+        <button type="button" onClick={handlePreviousDate} className='btn btn-dark mr-3'>Previous</button>
         <button type="button" onClick={handleTodayDate} className='btn btn-dark mr-3'>Today</button>
-        <button type="button" onClick={handleNextDate} data-testid="next-date" className='btn btn-dark mr-3'>Next</button>
+        <button type="button" onClick={handleNextDate} className='btn btn-dark mr-3'>Next</button>
       </div>
       <ErrorAlert error={reservationsError} />
       <ReservationList reservations={reservations}/>

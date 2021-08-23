@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router";
+import ErrorAlert from "../layout/ErrorAlert";
 import { createReservation } from "../utils/api";
 import { formatAsDate, today } from "../utils/date-time";
 
@@ -13,6 +14,9 @@ export default function Form() {
     people: 0,
     status: 'booked',
   })
+  
+  const [error, setError] = useState(null);
+
   const history = useHistory()
   
   function handleChange({ target }) {
@@ -28,11 +32,12 @@ export default function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createReservation(newReservation);
-    history.push(`/dashboard?date=${formatAsDate(newReservation.reservation_date)}`)
+    createReservation(newReservation)
+      .then(() => history.push(`/dashboard?date=${formatAsDate(newReservation.reservation_date)}`))
+      .catch(setError);
   }
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     history.push('/')
   }
 
@@ -118,6 +123,7 @@ export default function Form() {
         <div className="row">
           <div className="col-xs-12">
             <div  className="text-center">
+              <ErrorAlert error={error} />
               <button type="submit" onClick={handleSubmit} className='btn btn-dark mr-3 ml-3'>Submit</button>
               <button type="button" onClick={handleCancel} className='btn btn-dark mr-3 ml-3'>Cancel</button>
             </div>
