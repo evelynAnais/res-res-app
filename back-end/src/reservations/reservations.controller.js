@@ -73,6 +73,16 @@ function validateNotPast(req, res, next) {
   next({ status: 400, message: `reservation must be for a future date` });
 }
 
+function validateWorkingHours(req, res, next) {
+  const {reservation_time, reservation_date} = req.body.data
+  const now = new Date(`${reservation_date} ${reservation_time}`)
+  const businessHours = (now.getHours() + (now.getMinutes() / 60)) >= 10.5 && (now.getHours() + (now.getMinutes() / 60)) < 20.50
+    if (businessHours) {
+      return next();
+    }
+  next({ status: 400, message: `reservation must be during business hours` });
+}
+
 function validatePeople(req, res, next) {
   const { people } = req.body.data
   if (typeof people === 'number') {
@@ -117,7 +127,15 @@ async function destroy(req, res) {
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
-  create: [hasOnlyValidProperties, hasRequiredProperties, validatePeople, validateDate, validateTime, validateNotPast, validateNotTuesday, asyncErrorBoundary(create)],
+  create: [hasOnlyValidProperties, 
+            hasRequiredProperties, 
+            validatePeople, 
+            validateDate, 
+            validateTime, 
+            validateNotPast, 
+            validateNotTuesday,
+            validateWorkingHours, 
+            asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(reservationExists), read],
   update: [asyncErrorBoundary(reservationExists), hasOnlyValidProperties, hasRequiredProperties, asyncErrorBoundary(update)],
   delete: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)]
