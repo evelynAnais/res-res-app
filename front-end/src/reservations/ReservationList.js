@@ -1,4 +1,4 @@
-import ReservationCard from "./ReservationCard";
+import ReservationCard from './ReservationCard';
 
 export default function ReservationList({ reservations }) {
   const resList = reservations.map((reservation, reservation_id) => (

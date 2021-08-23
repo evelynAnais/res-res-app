@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useHistory } from "react-router";
-import ErrorAlert from "../layout/ErrorAlert";
-import { createReservation } from "../utils/api";
-import { formatAsDate, today } from "../utils/date-time";
+import { useState } from 'react';
+import { useHistory } from 'react-router';
+import ErrorAlert from '../layout/ErrorAlert';
+import { createReservation } from '../utils/api';
+import { formatAsDate, today } from '../utils/date-time';
 
 export default function Form() {
   const [newReservation, setNewReservation] = useState({
@@ -119,13 +119,13 @@ export default function Form() {
           required={true}
         />
       </label>
-      <div className="container">
-        <div className="row">
-          <div className="col-xs-12">
-            <div  className="text-center">
+      <div className='container'>
+        <div className='row'>
+          <div className='col-xs-12'>
+            <div  className='text-center'>
               <ErrorAlert error={error} />
-              <button type="submit" onClick={handleSubmit} className='btn btn-dark mr-3 ml-3'>Submit</button>
-              <button type="button" onClick={handleCancel} className='btn btn-dark mr-3 ml-3'>Cancel</button>
+              <button type='submit' onClick={handleSubmit} className='btn btn-dark mr-3 ml-3'>Submit</button>
+              <button type='button' onClick={handleCancel} className='btn btn-dark mr-3 ml-3'>Cancel</button>
             </div>
           </div>
         </div>
