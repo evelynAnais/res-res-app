@@ -31,7 +31,7 @@ async function tableExists(req, res, next) {
     res.locals.table = table;
     return next();
   }
-  next({ status: 404, message: `Table cannot be found.` });
+  next({ status: 404, message: `Table ${req.params.tableId} cannot be found.` });
 }
 
 async function list(req, res) {
