@@ -86,7 +86,7 @@ function validateWorkingHours(req, res, next) {
 function validatePeople(req, res, next) {
   const { people } = req.body.data
   if (typeof people === 'number') {
-    return next()
+    return next();
   }
   next({ status: 400, message: `people should be a number` });
 }
@@ -138,5 +138,6 @@ module.exports = {
             asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(reservationExists), read],
   update: [asyncErrorBoundary(reservationExists), hasOnlyValidProperties, hasRequiredProperties, asyncErrorBoundary(update)],
-  delete: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)]
+  delete: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)],
+  validatePeople
 }

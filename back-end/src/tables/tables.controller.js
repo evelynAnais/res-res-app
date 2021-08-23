@@ -1,7 +1,10 @@
 const service = require('./tables.service')
 const asyncErrorBoundary = require('../errors/asyncErrorBoundary')
 const hasProperties = require("../errors/hasProperties");
-const hasRequiredProperties = hasProperties('table_name', 'capacity', 'reservation_id');
+const hasRequiredProperties = hasProperties('table_name', 'capacity');
+const { read: readReservation } = require('../reservations/reservations.service');
+const controller = require('../reservations/reservations.controller');
+
 
 const VALID_PROPERTIES = [
   'table_name',
@@ -34,6 +37,36 @@ async function tableExists(req, res, next) {
   next({ status: 404, message: `Table ${req.params.tableId} cannot be found.` });
 }
 
+function validateTableName(req, res, next) {
+  const { table_name } = req.body.data
+  if (table_name.length >= 2) {
+    return next();
+  }
+  next({ status: 400, message: `table_name should be two characters` });
+}
+
+
+
+function validateCapacity(req, res, next) {
+  const people = controller.validatePeople
+  const { capacity } = req.body.data
+  //const { people } = res.locals.reservation;
+  if (people < capacity) {
+    return next()
+  }
+  next({ status: 400, message: `capacity should be a number` });
+}
+
+
+// function validateCapacity(req, res, next) {
+//   const { capacity } = req.body.data
+//   const { people } = res.locals.reservation;
+//   if (people < capacity) {
+//     return next()
+//   }
+//   next({ status: 400, message: `capacity should be a number` });
+// }
+
 async function list(req, res) {
   res.json({ data: await service.list() });
 }
@@ -62,7 +95,7 @@ async function destroy(req, res) {
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
-  create: [hasOnlyValidProperties, hasRequiredProperties, asyncErrorBoundary(create)],
+  create: [hasOnlyValidProperties, hasRequiredProperties, validateTableName, validateCapacity, asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(tableExists), read],
   update: [asyncErrorBoundary(tableExists), hasOnlyValidProperties, hasRequiredProperties, asyncErrorBoundary(update)],
   delete: [asyncErrorBoundary(tableExists), asyncErrorBoundary(destroy)]
