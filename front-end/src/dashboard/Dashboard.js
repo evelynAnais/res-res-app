@@ -81,6 +81,7 @@ function Dashboard({ date }) {
       <hr/>
       <TableList tables={tables} />
       <ErrorAlert error={tablesError} />
+      
     </main>
   );
 }
