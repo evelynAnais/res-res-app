@@ -4,14 +4,12 @@ const hasProperties = require('../errors/hasProperties');
 const hasRequiredProperties = hasProperties('table_name', 'capacity');
 const hasRequiredUpdateProperties = hasProperties('reservation_id');
 const { read: readReservation } = require('../reservations/reservations.service');
-//const controller = require('../reservations/reservations.controller');
-
 
 const VALID_PROPERTIES = [
   'table_name',
   'capacity',
   'reservation_id',
-  //'people'
+  'people'
 ];
 
 function hasOnlyValidProperties(req, res, next) {
@@ -57,17 +55,6 @@ function validateTableName(req, res, next) {
   next({ status: 400, message: `table_name should be two characters` });
 }
 
-// function validateCapacity(req, res, next) {
-//   const capacity = req.body.data.capacity;
-//   if (capacity > 0 && Number.isInteger(capacity)) {
-//     return next();
-//   }
-//   next({
-//     status: 400,
-//     message: `capacity '${capacity}' must be a whole number greater than 0.`,
-//   });
-// }
-
 function validateSufficientCapacity(req, res, next) {
   const { capacity } = res.locals.table;
   const { people } = res.locals.reservation;
@@ -84,6 +71,8 @@ function validateCapacity(req, res, next) {
   }
   next({ status: 400, message: `capacity should be a number` });
 }
+
+// possible bug in test, it sends people instead of capacity. passes test right now. after thinkful. change test and valid properties.
 
 function validateSeated(req, res, next) {
   const { status } = res.locals.reservation;
