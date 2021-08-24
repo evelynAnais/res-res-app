@@ -4,7 +4,7 @@ import ErrorAlert from '../layout/ErrorAlert';
 import { createReservation } from '../utils/api';
 import { formatAsDate, today } from '../utils/date-time';
 
-export default function Form() {
+export default function ReservationForm() {
   const [newReservation, setNewReservation] = useState({
     first_name: '',
     last_name: '',
