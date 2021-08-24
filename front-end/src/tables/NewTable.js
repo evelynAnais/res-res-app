@@ -1,4 +1,4 @@
-import TableForm from "./TableForm";
+import TableForm from './TableForm';
 
 export default function NewTable() {
   return (

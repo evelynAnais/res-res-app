@@ -1,4 +1,4 @@
-import TableCard from "./TableCard";
+import TableCard from'./TableCard';
 
 export default function TableList({ tables }) {
   const tabList = tables.map((table, table_id) => (
