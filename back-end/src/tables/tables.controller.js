@@ -2,14 +2,16 @@ const service = require('./tables.service')
 const asyncErrorBoundary = require('../errors/asyncErrorBoundary')
 const hasProperties = require("../errors/hasProperties");
 const hasRequiredProperties = hasProperties('table_name', 'capacity');
+const hasRequiredUpdateProperties = hasProperties('reservation_id');
 const { read: readReservation } = require('../reservations/reservations.service');
-const controller = require('../reservations/reservations.controller');
+//const controller = require('../reservations/reservations.controller');
 
 
 const VALID_PROPERTIES = [
   'table_name',
   'capacity',
-  'reservation_id'
+  'reservation_id',
+  //'people'
 ];
 
 function hasOnlyValidProperties(req, res, next) {
@@ -37,6 +39,16 @@ async function tableExists(req, res, next) {
   next({ status: 404, message: `Table ${req.params.tableId} cannot be found.` });
 }
 
+async function reservationExists(req, res, next) {
+  const { reservation_id } = req.body.data
+  const reservation = await readReservation(reservation_id);
+  if (reservation) {
+    res.locals.reservation = reservation;
+    return next();
+  }
+  next({ status: 404, message: `Reservation ${reservation_id} cannot be found.` });
+}
+
 function validateTableName(req, res, next) {
   const { table_name } = req.body.data
   if (table_name.length >= 2) {
@@ -45,27 +57,49 @@ function validateTableName(req, res, next) {
   next({ status: 400, message: `table_name should be two characters` });
 }
 
+// function validateCapacity(req, res, next) {
+//   const capacity = req.body.data.capacity;
+//   if (capacity > 0 && Number.isInteger(capacity)) {
+//     return next();
+//   }
+//   next({
+//     status: 400,
+//     message: `capacity '${capacity}' must be a whole number greater than 0.`,
+//   });
+// }
 
+function validateSufficientCapacity(req, res, next) {
+  const { capacity } = res.locals.table;
+  const { people } = res.locals.reservation;
+  if (people <= capacity) {
+    return next()
+  }
+  next({ status: 400, message: `capacity less than people` });
+}
 
 function validateCapacity(req, res, next) {
-  const people = controller.validatePeople
   const { capacity } = req.body.data
-  //const { people } = res.locals.reservation;
-  if (people < capacity) {
-    return next()
+  if (typeof capacity === 'number') {
+    return next();
   }
   next({ status: 400, message: `capacity should be a number` });
 }
 
+function validateSeated(req, res, next) {
+  const { status } = res.locals.reservation;
+  if (status !== 'seated') {
+    return next();
+    }
+    next({ status: 400, message: 'Reservation is already seated.' });
+}
 
-// function validateCapacity(req, res, next) {
-//   const { capacity } = req.body.data
-//   const { people } = res.locals.reservation;
-//   if (people < capacity) {
-//     return next()
-//   }
-//   next({ status: 400, message: `capacity should be a number` });
-// }
+function validateAvailable(req, res, next) {
+  const { reservation_id } = res.locals.table;
+  if (!reservation_id) {
+    return next();
+  }
+  next({ status: 400, message: 'Table is occupied.' });
+}
 
 async function list(req, res) {
   res.json({ data: await service.list() });
@@ -84,6 +118,7 @@ async function update(req, res) {
   const updatedTable = {
     ...req.body.data,
     table_id: res.locals.table.table_id,
+    reservation_id: res.locals.reservation.reservation_id
   };
   res.json({ data: await service.update(updatedTable) });
 }
@@ -95,8 +130,21 @@ async function destroy(req, res) {
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
-  create: [hasOnlyValidProperties, hasRequiredProperties, validateTableName, validateCapacity, asyncErrorBoundary(create)],
+  create: [
+    hasOnlyValidProperties, 
+    hasRequiredProperties, 
+    validateTableName, 
+    validateCapacity,
+    asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(tableExists), read],
-  update: [asyncErrorBoundary(tableExists), hasOnlyValidProperties, hasRequiredProperties, asyncErrorBoundary(update)],
+  update: [
+    hasOnlyValidProperties, 
+    hasRequiredUpdateProperties, 
+    asyncErrorBoundary(tableExists), 
+    asyncErrorBoundary(reservationExists),
+    validateSeated,
+    validateSufficientCapacity,
+    validateAvailable,
+    asyncErrorBoundary(update)],
   delete: [asyncErrorBoundary(tableExists), asyncErrorBoundary(destroy)]
 }
