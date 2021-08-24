@@ -10,4 +10,4 @@ export default function ReservationList({ reservations }) {
       {!resList.length && <p>No reservations this date</p>}
     </>
   )
-} 
+}

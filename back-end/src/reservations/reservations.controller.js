@@ -127,17 +127,21 @@ async function destroy(req, res) {
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
-  create: [hasOnlyValidProperties, 
-            hasRequiredProperties, 
-            validatePeople, 
-            validateDate, 
-            validateTime, 
-            validateNotPast, 
-            validateNotTuesday,
-            validateWorkingHours, 
-            asyncErrorBoundary(create)],
+  create: [
+    hasOnlyValidProperties, 
+    hasRequiredProperties, 
+    validatePeople, 
+    validateDate, 
+    validateTime, 
+    validateNotPast, 
+    validateNotTuesday,
+    validateWorkingHours, 
+    asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(reservationExists), read],
-  update: [asyncErrorBoundary(reservationExists), hasOnlyValidProperties, hasRequiredProperties, asyncErrorBoundary(update)],
+  update: [
+    asyncErrorBoundary(reservationExists), 
+    hasOnlyValidProperties, 
+    hasRequiredProperties, 
+    asyncErrorBoundary(update)],
   delete: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)],
-  validatePeople
 }

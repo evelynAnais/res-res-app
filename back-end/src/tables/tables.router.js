@@ -3,7 +3,7 @@ const controller = require('./tables.controller');
 const methodNotAllowed = require('../errors/methodNotAllowed');
 
 router
-  .route('/:tableId')
+  .route('/:tableId/seat')
   .get(controller.read)
   .put(controller.update)
   .delete(controller.delete)
