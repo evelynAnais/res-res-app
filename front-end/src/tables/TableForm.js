@@ -38,45 +38,45 @@ export default function TableForm() {
   return(
     <>
       <div className='container'>
-      <form className='row d-flex'>
-        <label htmlFor='table_name' className='form-label'>
-          Table Name:
-          <input 
-            className='form-control mb-3'
-            type='text' 
-            id='table_name' 
-            name='table_name'
-            value={newTable.table_name}
-            onChange={handleChange}
-            required={true}
-          />
-        </label>
-        <label htmlFor='capacity'>
-          Capacity:
-          <input 
-            className='form-control mb-3'
-            type='number' 
-            id='capacity' 
-            name='capacity'
-            min='1'
-            // placeholder='1'
-            value={newTable.capacity}
-            onChange={handleChange}
-            required={true}
-          />
-        </label>
-      <div className='container'>
-        <div className='row'>
-          <div className='col-xs-12'>
-            <div  className='text-center'>
-              <ErrorAlert error={error} />
-              <button type='submit' onClick={handleSubmit} className='btn btn-dark mr-3 ml-3'>Submit</button>
-              <button type='button' onClick={handleCancel} className='btn btn-dark mr-3 ml-3'>Cancel</button>
+        <form className='row d-flex'>
+          <label htmlFor='table_name' className='form-label'>
+            Table Name:
+            <input 
+              className='form-control mb-3'
+              type='text' 
+              id='table_name' 
+              name='table_name'
+              value={newTable.table_name}
+              onChange={handleChange}
+              required={true}
+            />
+          </label>
+          <label htmlFor='capacity'>
+            Capacity:
+            <input 
+              className='form-control mb-3'
+              type='number' 
+              id='capacity' 
+              name='capacity'
+              min='1'
+              // placeholder='1'
+              value={newTable.capacity}
+              onChange={handleChange}
+              required={true}
+            />
+          </label>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-xs-12'>
+              <div  className='text-center'>
+                <ErrorAlert error={error} />
+                <button type='submit' onClick={handleSubmit} className='btn btn-dark mr-3 ml-3'>Submit</button>
+                <button type='button' onClick={handleCancel} className='btn btn-dark mr-3 ml-3'>Cancel</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
     </div>
     </>
   )

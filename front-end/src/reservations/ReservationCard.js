@@ -1,7 +1,7 @@
 export default function ReservationCard({ reservation }) {
   return (
     <>
-      <div className='card border-dark text-white bg-dark mt-3' style={{'width': '18rem'}}>
+      <div className='card border-secondary text-white bg-dark mt-3' style={{'width': '18rem'}}>
         <div className='card-header bg-transparent'>
           {reservation?.first_name} {reservation?.last_name}
         </div>

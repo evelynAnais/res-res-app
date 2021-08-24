@@ -5,8 +5,8 @@ export default function TableList({ tables }) {
     <TableCard  key={table_id} table={table} />
   ));
   return(
-    <>
+    <div className='card-columns'>
       {tabList.length ? tabList : null}
-    </>
+    </div>
   )
 }

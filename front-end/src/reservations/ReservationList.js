@@ -5,9 +5,9 @@ export default function ReservationList({ reservations }) {
     <ReservationCard key={reservation_id} reservation={reservation} />
   ));
   return(
-    <>
+    <div className='card-group'>
       {resList.length ? resList : null} 
       {!resList.length && <p>No reservations this date</p>}
-    </>
+    </div>
   )
 }
