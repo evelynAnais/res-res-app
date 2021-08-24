@@ -11,7 +11,7 @@ export default function ReservationCard({ reservation }) {
           <li className='list-group-item'>Reservation Time: {reservation?.reservation_time}</li>
           <li className='list-group-item'>People: {reservation?.people}</li>
           <div class='card-footer bg-transparent border-dark'>
-            <a href={`/reservations/${reservation?.reservation_id}/seat`} class='btn btn-secondary ml-5'>Seat</a>
+            <a href={`/reservations/${reservation?.reservation_id}/seat`} class='btn btn-secondary btn-block'>Seat</a>
           </div>
           
         </ul>

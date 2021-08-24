@@ -65,19 +65,19 @@ export default function TableForm() {
               required={true}
             />
           </label>
-        <div className='container'>
-          <div className='row'>
-            <div className='col-xs-12'>
-              <div  className='text-center'>
-                <ErrorAlert error={error} />
-                <button type='submit' onClick={handleSubmit} className='btn btn-dark mr-3 ml-3'>Submit</button>
-                <button type='button' onClick={handleCancel} className='btn btn-dark mr-3 ml-3'>Cancel</button>
+          <div className='container'>
+            <div className='row'>
+              <div className='col-xs-12'>
+                <div  className='text-center'>
+                  <ErrorAlert error={error} />
+                  <button type='submit' onClick={handleSubmit} className='btn btn-dark mr-3 ml-3'>Submit</button>
+                  <button type='button' onClick={handleCancel} className='btn btn-dark mr-3 ml-3'>Cancel</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
     </>
   )
 }
