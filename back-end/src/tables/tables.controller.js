@@ -1,6 +1,6 @@
 const service = require('./tables.service')
 const asyncErrorBoundary = require('../errors/asyncErrorBoundary')
-const hasProperties = require("../errors/hasProperties");
+const hasProperties = require('../errors/hasProperties');
 const hasRequiredProperties = hasProperties('table_name', 'capacity');
 const hasRequiredUpdateProperties = hasProperties('reservation_id');
 const { read: readReservation } = require('../reservations/reservations.service');
@@ -24,7 +24,7 @@ function hasOnlyValidProperties(req, res, next) {
   if (invalidFields.length) {
     return next({
       status: 400,
-      message: `Invalid field(s): ${invalidFields.join(", ")}`,
+      message: `Invalid field(s): ${invalidFields.join(', ')}`,
     });
   }
   next();
