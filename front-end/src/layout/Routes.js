@@ -26,11 +26,11 @@ function Routes() {
       </Route>
 
       <Route exact={true} path='/reservations/new'>
-          <NewReservation />
+        <NewReservation />
       </Route>
 
       <Route exact={true} path='/tables/new'>
-          <NewTable />
+        <NewTable />
       </Route>
 
       <Route path='/dashboard'>
