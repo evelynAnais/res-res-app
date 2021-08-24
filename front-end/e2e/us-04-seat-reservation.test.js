@@ -119,7 +119,7 @@ describe('US-04 - Seat reservation - E2E', () => {
       });
 
       const [cancelButton] = await page.$x(
-        '//button[contains(translate(., 'ACDEFGHIJKLMNOPQRSTUVWXYZ', 'acdefghijklmnopqrstuvwxyz'), 'cancel')]'
+        '//button[contains(translate(., "ACDEFGHIJKLMNOPQRSTUVWXYZ", "acdefghijklmnopqrstuvwxyz"), "cancel")]'
       );
 
       if (!cancelButton) {
@@ -170,7 +170,7 @@ describe('US-04 - Seat reservation - E2E', () => {
     });
 
     test('seating reservation at table #1 makes the table occupied', async () => {
-      await page.waitForSelector('option:not([value=''])');
+      await page.waitForSelector('option:not([value=""])');
 
       await page.screenshot({
         path: '.screenshots/us-04-seat-reservation-start.png',
@@ -199,7 +199,7 @@ describe('US-04 - Seat reservation - E2E', () => {
     });
 
     test('cannot seat reservation at Bar #1', async () => {
-        await page.waitForSelector('option:not([value=''])');
+        await page.waitForSelector('option:not([value=""])');
 
         await page.screenshot({
           path: '.screenshots/us-04-seat-capacity-reservation-start.png',
