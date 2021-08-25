@@ -20,6 +20,7 @@ function Dashboard({ date }) {
   const [tablesError, setTablesError] = useState(null);
 
   const history = useHistory();
+  
   const query = useQuery().get('date');
   if (query) date = query;
 
@@ -81,7 +82,6 @@ function Dashboard({ date }) {
       <hr/>
       <TableList tables={tables} />
       <ErrorAlert error={tablesError} />
-      
     </main>
   );
 }

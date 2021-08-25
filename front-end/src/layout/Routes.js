@@ -31,7 +31,7 @@ function Routes() {
         <NewReservation />
       </Route>
 
-      <Route exact={true} path='/reservations/:reservation_id/seat'>
+      <Route path='/reservations/:reservation_id/seat'>
         <ReservationSeat />
       </Route>
 
