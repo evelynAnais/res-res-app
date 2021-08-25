@@ -1,11 +1,9 @@
 import { useState } from "react";
-//import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
 import { deleteFinish } from "../utils/api";
 
 export default function TableCard({ table, loadDashboard}) {
   const [finishError, setFinishError] = useState(null);
-  //const history = useHistory()
 
   const handleFinish = (e) => {
     e.preventDefault();
