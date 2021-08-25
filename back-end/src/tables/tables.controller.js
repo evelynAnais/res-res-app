@@ -121,8 +121,8 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
-  await service.destroy(res.locals.table.table_id);
-  res.sendStatus(200);
+  const data = await service.destroy(res.locals.table.table_id, res.locals.table.reservation_id);
+  res.status(200).json({ data });
 }
 
 module.exports = {

@@ -23,8 +23,22 @@ function update(updatedTable) {
     .then((updatedTables) => updatedTables[0]);
 }
 
-function destroy(table_id) {
-  return knex('tables').where({ table_id }).del();
+function destroy(table_id, reservation_id) {
+  return knex.transaction((trx) => {
+    return knex('reservations')
+      .transacting(trx)
+      .where({ reservation_id: reservation_id })
+      .update({ status: 'finished' })
+      .returning('*')
+      .then(() => {
+        return knex('tables')
+          .where({ table_id: table_id })
+          .update({ reservation_id: null })
+          .returning('*');
+      })
+      .then(trx.commit)
+      .catch(trx.rollback);
+  });
 }
 
 module.exports = {
