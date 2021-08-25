@@ -80,7 +80,7 @@ function Dashboard({ date }) {
       <ErrorAlert error={reservationsError} />
       <ReservationList reservations={reservations}/>
       <hr/>
-      <TableList tables={tables} />
+      <TableList tables={tables} loadDashboard={loadDashboard} />
       <ErrorAlert error={tablesError} />
     </main>
   );
