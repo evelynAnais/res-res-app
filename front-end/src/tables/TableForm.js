@@ -32,7 +32,7 @@ export default function TableForm() {
   }
 
   const handleCancel = () => {
-    history.push('/')
+    history.goBack()
   }
 
   return(
