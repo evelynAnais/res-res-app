@@ -123,6 +123,11 @@ export async function updateTable(table, signal) {
 
 export async function deleteFinish(table_id, signal) {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
-  const options = { method: "DELETE", signal };
+  const options = { 
+    method: 'DELETE',
+    headers,
+    body: JSON.stringify({ data: { table_id: table_id } }),
+    signal 
+  };
   return await fetchJson(url, options);
 }
