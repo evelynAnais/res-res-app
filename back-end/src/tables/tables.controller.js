@@ -90,6 +90,14 @@ function validateAvailable(req, res, next) {
   next({ status: 400, message: 'Table is occupied.' });
 }
 
+function validateNotAvailable(req, res, next) {
+  const { reservation_id } = res.locals.table;
+  if (reservation_id) {
+    return next();
+  }
+  next({ status: 400, message: 'not occupied.' });
+}
+
 async function list(req, res) {
   res.json({ data: await service.list() });
 }
@@ -114,7 +122,7 @@ async function update(req, res) {
 
 async function destroy(req, res) {
   await service.destroy(res.locals.table.table_id);
-  res.sendStatus(204);
+  res.sendStatus(200);
 }
 
 module.exports = {
@@ -135,5 +143,5 @@ module.exports = {
     validateSufficientCapacity,
     validateAvailable,
     asyncErrorBoundary(update)],
-  delete: [asyncErrorBoundary(tableExists), asyncErrorBoundary(destroy)]
+  delete: [asyncErrorBoundary(tableExists), validateNotAvailable, asyncErrorBoundary(destroy)]
 }
