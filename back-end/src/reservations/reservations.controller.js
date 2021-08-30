@@ -76,7 +76,7 @@ function validateNotPast(req, res, next) {
 function validateWorkingHours(req, res, next) {
   const {reservation_time, reservation_date} = req.body.data
   const now = new Date(`${reservation_date} ${reservation_time}`)
-  const businessHours = (now.getHours() + (now.getMinutes() / 60)) >= 10.5 && (now.getHours() + (now.getMinutes() / 60)) < 20.50
+  const businessHours = (now.getHours() + (now.getMinutes() / 60)) >= 10.5 && (now.getHours() + (now.getMinutes() / 60)) <= 21.5
     if (businessHours) {
       return next();
     }
