@@ -172,7 +172,6 @@ module.exports = {
     validateNotTuesday,
     validateWorkingHours,
     validateStat, 
-    //hasStatusBooked,
     asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(reservationExists), read],
   update: [
@@ -180,7 +179,8 @@ module.exports = {
     hasOnlyValidProperties, 
     hasRequiredProperties, 
     validatePeople,
-
+    validateDate, 
+    validateTime, 
     validateStat,
     asyncErrorBoundary(update)],
   updateStatus: [

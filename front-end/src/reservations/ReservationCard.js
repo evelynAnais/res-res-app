@@ -2,7 +2,7 @@ import { useRouteMatch } from "react-router-dom";
 
 export default function ReservationCard({ reservation }) {
   const { path } = useRouteMatch();
-  console.log(path)
+  
   return (
     <>
       <div className='card border-secondary text-white bg-dark mt-3' style={{'width': '18rem'}}>
