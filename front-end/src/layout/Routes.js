@@ -8,6 +8,7 @@ import NotFound from './NotFound';
 import { today } from '../utils/date-time';
 import NewTable from '../tables/NewTable';
 import ReservationSeat from '../reservations/ReservationSeat';
+import Search from '../reservations/Search';
 
 /**
  * Defines all the routes for the application.
@@ -21,6 +22,14 @@ function Routes() {
     <Switch>
       <Route exact={true} path='/'>
         <Redirect to={'/dashboard'} />
+      </Route>
+
+      <Route path='/dashboard'>
+        <Dashboard date={today()} />
+      </Route>
+
+      <Route exact={true} path='/search'>
+        <Search />
       </Route>
 
       <Route exact={true} path='/reservations'>
@@ -39,9 +48,7 @@ function Routes() {
         <NewTable />
       </Route>
 
-      <Route path='/dashboard'>
-        <Dashboard date={today()} />
-      </Route>
+      
 
       <Route>
         <NotFound />
