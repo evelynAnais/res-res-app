@@ -41,7 +41,6 @@ function updateStatus(updatedReservation) {
     .update({ status: updatedReservation.status })
     .returning('*')
     .then((updatedReservations) => updatedReservations[0]);
-
 }
 
 function destroy(reservation_id) {
