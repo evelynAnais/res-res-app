@@ -2,6 +2,7 @@ const service = require('./reservations.service')
 const asyncErrorBoundary = require('../errors/asyncErrorBoundary')
 const hasProperties = require('../errors/hasProperties');
 const hasRequiredProperties = hasProperties('first_name', 'last_name', 'mobile_number', 'reservation_date', 'reservation_time', 'people');
+const hasRequiredUpdateProperties = hasProperties('status');
 
 const VALID_PROPERTIES = [
   'first_name',
@@ -84,11 +85,37 @@ function validateWorkingHours(req, res, next) {
 }
 
 function validatePeople(req, res, next) {
-  const { people } = req.body.data
+  const { people } = req.body.data;
   if (typeof people === 'number') {
     return next();
   }
   next({ status: 400, message: `people should be a number` });
+}
+
+function validateStat(req, res, next) {
+  const { status } = req.body.data;
+  if (status !== 'seated' && status !== 'finished') {
+    return next();
+  }
+  next({ status: 400, message: `reservation status ${status} invalid.`, });
+}
+
+
+function validateStatus(req, res, next) {
+  const { status } = req.body.data;
+  const validStatus = ['booked', 'seated', 'finished', 'cancelled'];
+  if (validStatus.includes(status)) {
+    return next();
+  }
+  next({ status: 400, message: `status ${status} is not valid` })
+}
+
+function validateFinished(req, res, next) {
+  const { status } = res.locals.reservation;
+  if (status !== 'finished') {
+    return next();
+  }
+  next({ status: 400, message: `status ${status} cannot be updated` })
 }
 
 async function list(req, res) {
@@ -115,9 +142,17 @@ function read(req, res) {
 async function update(req, res) {
   const updatedReservation = {
     ...req.body.data,
-    reservation_id: res.locals.reservation.reservation_id,
+    reservation_id: res.locals.reservation_id,
   };
   res.json({ data: await service.update(updatedReservation) });
+}
+
+async function updateStatus(req, res, next) {
+  const updatedReservation = {
+    ...req.body.data,
+    reservation_id: req.params.reservationId,
+  };
+  res.json({ data: await service.updateStatus(updatedReservation) });
 }
 
 async function destroy(req, res) {
@@ -135,13 +170,25 @@ module.exports = {
     validateTime, 
     validateNotPast, 
     validateNotTuesday,
-    validateWorkingHours, 
+    validateWorkingHours,
+    validateStat, 
+    //hasStatusBooked,
     asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(reservationExists), read],
   update: [
     asyncErrorBoundary(reservationExists), 
     hasOnlyValidProperties, 
     hasRequiredProperties, 
+    validatePeople,
+
+    validateStat,
     asyncErrorBoundary(update)],
+  updateStatus: [
+    asyncErrorBoundary(reservationExists),
+    hasRequiredUpdateProperties,
+    validateFinished,
+    validateStatus,
+    asyncErrorBoundary(updateStatus)
+  ],
   delete: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(destroy)],
 }
