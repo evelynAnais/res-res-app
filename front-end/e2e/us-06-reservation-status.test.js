@@ -70,7 +70,7 @@ describe('US-06 - Reservation status - E2E', () => {
       expect(containsBooked).toBe(true);
     });
 
-    test('Seating the reservation changes status to 'seated' and hides Seat button', async () => {
+    test('Seating the reservation changes status to "seated" and hides Seat button', async () => {
       await page.screenshot({
         path: '.screenshots/us-06-seated-before.png',
         fullPage: true,
