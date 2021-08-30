@@ -20,7 +20,7 @@ describe('US-06 - Reservation status', () => {
   });
 
   describe('POST /reservations', () => {
-    test('returns 201 if status is 'booked'', async () => {
+    test('returns 201 if status is "booked"', async () => {
       const data = {
         first_name: 'first',
         last_name: 'last',
@@ -51,7 +51,7 @@ describe('US-06 - Reservation status', () => {
     });
 
     test.each(['seated', 'finished'])(
-      'returns 400 if status is '%s'',
+      'returns 400 if status is "%s"',
       async (status) => {
         const data = {
           first_name: 'first',
@@ -125,7 +125,7 @@ describe('US-06 - Reservation status', () => {
     });
 
     test.each(['booked', 'seated', 'finished'])(
-      'returns 200 for status '%s'',
+      'returns 200 for status "%s"',
       async (status) => {
         expect(reservationOne).not.toBeUndefined();
 
@@ -152,7 +152,7 @@ describe('US-06 - Reservation status', () => {
       [tableOne, tableTwo] = await knex('tables').orderBy('table_name');
     });
 
-    test('returns 200 and changes reservation status to 'seated'', async () => {
+    test('returns 200 and changes reservation status to "seated"', async () => {
       expect(tableOne).not.toBeUndefined();
       expect(reservationOne).not.toBeUndefined();
 
@@ -173,7 +173,7 @@ describe('US-06 - Reservation status', () => {
       expect(reservationResponse.status).toBe(200);
     });
 
-    test('returns 400 if reservation is already 'seated'', async () => {
+    test('returns 400 if reservation is already "seated"', async () => {
       expect(tableOne).not.toBeUndefined();
       expect(reservationOne).not.toBeUndefined();
 
@@ -206,7 +206,7 @@ describe('US-06 - Reservation status', () => {
       tableOne = await knex('tables').orderBy('table_name').first();
     });
 
-    test('returns 200 and changes reservation status to 'finished'', async () => {
+    test('returns 200 and changes reservation status to "finished"', async () => {
       expect(tableOne).not.toBeUndefined();
       expect(reservationOne).not.toBeUndefined();
 
@@ -250,7 +250,7 @@ describe('US-06 - Reservation status', () => {
       tableOne = await knex('tables').orderBy('table_name').first();
     });
 
-    test('does not include 'finished' reservations', async () => {
+    test('does not include "finished" reservations', async () => {
       expect(tableOne).not.toBeUndefined();
       expect(reservationOne).not.toBeUndefined();
 
