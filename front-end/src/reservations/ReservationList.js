@@ -2,11 +2,11 @@ import ReservationCard from './ReservationCard';
 import { useRouteMatch } from "react-router-dom";
 
 
-export default function ReservationList({ reservations }) {
+export default function ReservationList({ reservations, loadDashboard }) {
   const { path } = useRouteMatch();
 
   const resList = reservations.map((reservation, reservation_id) => (
-    <ReservationCard key={reservation_id} reservation={reservation} />
+    <ReservationCard key={reservation_id} reservation={reservation} loadDashboard={() => loadDashboard} />
   ));
 
   return(

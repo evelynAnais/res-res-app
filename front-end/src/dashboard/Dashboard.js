@@ -78,7 +78,7 @@ function Dashboard({ date }) {
         <button type='button' onClick={handleNextDate} className='btn btn-dark mr-3'>Next</button>
       </div>
       <ErrorAlert error={reservationsError} />
-      <ReservationList reservations={reservations}/>
+      <ReservationList reservations={reservations} loadDashboard={loadDashboard} />
       <hr/>
       <TableList tables={tables} loadDashboard={loadDashboard} />
       <ErrorAlert error={tablesError} />
