@@ -35,7 +35,7 @@ export default function ReservationSeat() {
       reservation_id: resId.reservation_id
     }
     updateTable(updatedTable)
-      .then(() => history.push(`/dashboard`))
+      .then(() => history.push(`/dashboard?date=${resId.reservation_date}`))
       .catch(setFormError);
   }
 
