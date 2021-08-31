@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
+import { useRouteMatch } from "react-router-dom";
 import ErrorAlert from '../layout/ErrorAlert';
-import { createReservation } from '../utils/api';
+import { createReservation, updateReservation } from '../utils/api';
 import { formatAsDate, today } from '../utils/date-time';
 
-export default function ReservationForm() {
+export default function ReservationForm({ reservation }) {
   const [newReservation, setNewReservation] = useState({
     first_name: '',
     last_name: '',
@@ -13,11 +14,15 @@ export default function ReservationForm() {
     reservation_time: '10:30',
     people: 0,
     status: 'booked',
-  })
+  });
+
+  useEffect(() => {
+    if (reservation?.reservation_id) setNewReservation(reservation)
+  }, [reservation, reservation.reservation_id])
   
   const [error, setError] = useState(null);
-
-  const history = useHistory()
+  const { path, params } = useRouteMatch();
+  const history = useHistory();
   
   function handleChange({ target }) {
     let newValue = target.value;
@@ -32,13 +37,24 @@ export default function ReservationForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createReservation(newReservation)
+    if (path.includes('edit')) {
+      const updatedReservation = {
+        reservation_id: params.reservation_id,
+        ...newReservation
+      }
+      updateReservation(updatedReservation)
       .then(() => history.push(`/dashboard?date=${formatAsDate(newReservation.reservation_date)}`))
       .catch(setError);
+    } else {
+      createReservation(newReservation)
+      .then(() => history.push(`/dashboard?date=${formatAsDate(newReservation.reservation_date)}`))
+      .catch(setError);
+    }
   }
 
   const handleCancel = () => {
     history.push('/')
+    //history.goBack()
   }
 
   return (

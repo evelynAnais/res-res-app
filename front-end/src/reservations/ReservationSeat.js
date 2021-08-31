@@ -12,7 +12,6 @@ export default function ReservationSeat() {
   const [formError, setFormError] = useState(null);
   const [resError, setResError] = useState(null);
   const { params } = useRouteMatch();
-
   const history = useHistory()
 
   useEffect(loadTables, [params.reservation_id]);
