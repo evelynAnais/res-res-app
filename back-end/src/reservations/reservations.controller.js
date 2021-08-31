@@ -142,7 +142,7 @@ function read(req, res) {
 async function update(req, res) {
   const updatedReservation = {
     ...req.body.data,
-    reservation_id: res.locals.reservation_id,
+    reservation_id: req.params.reservationId,
   };
   res.json({ data: await service.update(updatedReservation) });
 }
