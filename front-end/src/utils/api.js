@@ -91,6 +91,28 @@ export async function createReservation(reservation, signal) {
   return await fetchJson(url, options, reservation);
 }
 
+export async function updateReservationStatus(reservation, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation.reservation_id}/status`;
+  const options = {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify({ data: {status: reservation.status} }),
+    signal,
+  };
+  return await fetchJson(url, options, reservation);
+}
+
+export async function updateReservation(reservation, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation.reservation_id}`;
+  const options = {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify({ data: reservation }),
+    signal,
+  };
+  return await fetchJson(url, options, reservation);
+}
+
 export async function listTables(params, signal) {
   const url = new URL(`${API_BASE_URL}/tables`);
   Object.entries(params).forEach(([key, value]) =>
