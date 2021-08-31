@@ -54,13 +54,11 @@ export default function Search() {
               <button 
                 className='btn btn-dark' 
                 type='submit' 
-                
-                id='button-addon2'
-                >Find
+                id='button-addon2'>
+                  Find
               </button>
             </div>
           </label>
-          
         </form>
       </div>
       {haveSearched && <ReservationList reservations={reservations} />}

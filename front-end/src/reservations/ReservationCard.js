@@ -26,7 +26,7 @@ export default function ReservationCard({ reservation, loadDashboard }) {
   
   return (
     <>
-      {reservation.status !== 'cancelled' && <div className='card border-secondary text-white bg-dark mt-3' style={{'width': '18rem'}}>
+      {reservation?.status !== 'cancelled' && <div className='card border-secondary text-white bg-dark mt-3' style={{'width': '18rem'}}>
         <div className='card-header bg-transparent'>
           {reservation?.first_name} {reservation?.last_name}
         </div>
@@ -35,7 +35,7 @@ export default function ReservationCard({ reservation, loadDashboard }) {
           <li className='list-group-item'>Reservation Date: {reservation?.reservation_date}</li>
           <li className='list-group-item'>Reservation Time: {reservation?.reservation_time}</li>
           <li className='list-group-item'>People: {reservation?.people}</li>
-          <li className='list-group-item' data-reservation-id-status={reservation.reservation_id}>Status: {reservation?.status} </li>
+          <li className='list-group-item' data-reservation-id-status={reservation?.reservation_id}>Status: {reservation?.status} </li>
           <div className='card-footer bg-transparent border-dark'>
             {path.includes('seat') 
               ? null 
@@ -49,8 +49,8 @@ export default function ReservationCard({ reservation, loadDashboard }) {
                     onClick={handleCancel} 
                     value={reservation?.reservation_id} 
                     data-reservation-id-cancel={reservation?.reservation_id}
-                    className='btn btn-secondary btn-block'
-                    >Cancel
+                    className='btn btn-secondary btn-block'>
+                      Cancel
                   </button>
                   <ErrorAlert error={cancelError} />
                 </>}

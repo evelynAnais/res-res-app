@@ -26,14 +26,16 @@ export default function TableCard({ table, loadDashboard}) {
           <h5 className='card-title' data-table-id-status={`${table?.table_id}`}>{table?.reservation_id ? 'Occupied' : 'Free'}</h5>
           <p className='card-text' >Capacity: {table.capacity}</p>
           <div className='card-footer bg-transparent border-dark'>
-            <button 
+            {table?.reservation_id === null 
+            ? null 
+            : <button 
               type='button' 
               value={table?.table_id} 
               onClick={handleFinish} 
               data-table-id-finish={table?.table_id} 
               className='btn btn-secondary btn-block'>
                 Finish
-            </button>
+            </button>}
           </div>
           <ErrorAlert error={finishError} />
         </div>

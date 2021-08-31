@@ -5,7 +5,7 @@ import { useRouteMatch } from "react-router-dom";
 export default function ReservationList({ reservations, loadDashboard }) {
   const { path } = useRouteMatch();
 
-  const resList = reservations.map((reservation, reservation_id) => (
+  const resList = reservations.filter((reservation) => reservation?.status !== 'finished').map((reservation, reservation_id) => (
     <ReservationCard key={reservation_id} reservation={reservation} loadDashboard={() => loadDashboard} />
   ));
 
