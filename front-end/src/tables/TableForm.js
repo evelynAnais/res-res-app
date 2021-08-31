@@ -8,9 +8,7 @@ export default function TableForm() {
     table_name: '',
     capacity: '',
   })
-
   const [error, setError] = useState(null);
-
   const history = useHistory()
   
   function handleChange({ target }) {
@@ -20,7 +18,7 @@ export default function TableForm() {
     }
     setNewTable((previousTable) => ({
       ...previousTable,
-      [target.name]: newValue,
+      [target.name]: newValue
     }));
   }
 
@@ -32,10 +30,10 @@ export default function TableForm() {
   }
 
   const handleCancel = () => {
-    history.goBack()
+    history.goBack();
   }
 
-  return(
+  return (
     <>
       <div className='container'>
         <form className='row d-flex'>
@@ -79,5 +77,5 @@ export default function TableForm() {
         </form>
       </div>
     </>
-  )
+  );
 }

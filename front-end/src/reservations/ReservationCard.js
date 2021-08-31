@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useRouteMatch } from "react-router-dom";
-import ErrorAlert from "../layout/ErrorAlert";
-import { updateReservationStatus } from "../utils/api";
+import { useState } from 'react';
+import { useRouteMatch } from 'react-router-dom';
+import ErrorAlert from '../layout/ErrorAlert';
+import { updateReservationStatus } from '../utils/api';
 
 export default function ReservationCard({ reservation, loadDashboard }) {
   const [cancelError, setCancelError] = useState(null);
@@ -20,7 +20,7 @@ export default function ReservationCard({ reservation, loadDashboard }) {
         .then((res) => console.log(res))
         .then(loadDashboard())
         .catch(setCancelError);
-      return () => abortController.abort()
+      return () => abortController.abort();
     }
   };
   
@@ -38,8 +38,8 @@ export default function ReservationCard({ reservation, loadDashboard }) {
           <li className='list-group-item' data-reservation-id-status={reservation?.reservation_id}>Status: {reservation?.status} </li>
           <div className='card-footer bg-transparent border-dark'>
             {path.includes('seat') 
-              ? null 
-              : reservation?.status === 'seated' 
+              ? null
+              : reservation?.status === 'seated'
               ? null 
               : <>
                   <a href={`/reservations/${reservation?.reservation_id}/seat`} className='btn btn-secondary btn-block'>Seat</a>
@@ -58,5 +58,5 @@ export default function ReservationCard({ reservation, loadDashboard }) {
         </ul>
       </div>}
     </>
-  )
+  );
 }

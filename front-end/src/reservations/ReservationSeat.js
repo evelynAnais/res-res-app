@@ -12,7 +12,7 @@ export default function ReservationSeat() {
   const [formError, setFormError] = useState(null);
   const [resError, setResError] = useState(null);
   const { params } = useRouteMatch();
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(loadTables, [params.reservation_id]);
 
@@ -24,7 +24,7 @@ export default function ReservationSeat() {
       .catch(setTablesError);
     readReservation(params.reservation_id, abortController.signal)  
       .then(setResId)
-      .catch(setResError)
+      .catch(setResError);
     return () => abortController.abort();
   }
 
@@ -49,7 +49,7 @@ export default function ReservationSeat() {
 
   const tableOptions = tables.map((table) => (
     <option key={table.table_id} value={table.table_id}>{table.table_name} - {table.capacity}</option>
-  ))
+  ));
 
   return (
     <div className='container'>
@@ -81,5 +81,5 @@ export default function ReservationSeat() {
         </div>
       </div>
     </div>
-  )
+  );
 } 

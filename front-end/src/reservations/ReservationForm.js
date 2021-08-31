@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch } from 'react-router-dom';
 import ErrorAlert from '../layout/ErrorAlert';
 import { createReservation, updateReservation } from '../utils/api';
 import { formatAsDate, today } from '../utils/date-time';
@@ -13,16 +13,15 @@ export default function ReservationForm({ reservation }) {
     reservation_date: today(),
     reservation_time: '10:30',
     people: 0,
-    status: 'booked',
+    status: 'booked'
   });
-
-  useEffect(() => {
-    if (reservation?.reservation_id) setNewReservation(reservation)
-  }, [reservation, reservation.reservation_id])
-  
   const [error, setError] = useState(null);
   const { path, params } = useRouteMatch();
   const history = useHistory();
+
+  useEffect(() => {
+    if (reservation?.reservation_id) setNewReservation(reservation);
+  }, [reservation, reservation.reservation_id]);
   
   function handleChange({ target }) {
     let newValue = target.value;
@@ -53,8 +52,7 @@ export default function ReservationForm({ reservation }) {
   }
 
   const handleCancel = () => {
-    history.push('/')
-    //history.goBack()
+    history.push('/');
   }
 
   return (
@@ -148,5 +146,5 @@ export default function ReservationForm({ reservation }) {
       </div>
     </form>
     </div>
-  )
+  );
 }

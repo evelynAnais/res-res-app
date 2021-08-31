@@ -5,9 +5,9 @@ export default function TableList({ tables, loadDashboard, date }) {
     <TableCard  key={table_id} table={table} loadDashboard={() => loadDashboard} date={date} />
   ));
 
-  return(
+  return (
     <div className='card-columns'>
       {tabList.length ? tabList : null}
     </div>
-  )
+  );
 }

@@ -1,13 +1,13 @@
-import { useState } from "react";
-import ErrorAlert from "../layout/ErrorAlert";
-import { listReservations } from "../utils/api";
-import ReservationList from "./ReservationList";
+import { useState } from 'react';
+import ErrorAlert from '../layout/ErrorAlert';
+import { listReservations } from '../utils/api';
+import ReservationList from './ReservationList';
 
 export default function Search() {
   const [search, setSearch] = useState({
     mobile_number: ''
   });
-  const [haveSearched, setHaveSearched] = useState(false)
+  const [haveSearched, setHaveSearched] = useState(false);
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
 
@@ -15,7 +15,7 @@ export default function Search() {
     setSearch((previousSearch) => ({
       ...previousSearch,
       [target.name]: target.value
-    }))
+    }));
   }  
 
   const handleFind = (e) => {
@@ -64,5 +64,5 @@ export default function Search() {
       {haveSearched && <ReservationList reservations={reservations} />}
       <ErrorAlert error={reservationsError} />
     </>
-  )
+  );
 }

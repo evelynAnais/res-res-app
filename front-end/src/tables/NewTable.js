@@ -8,5 +8,5 @@ export default function NewTable() {
         <TableForm />
       </div>
     </>
-  )
+  );
 }

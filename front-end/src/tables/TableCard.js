@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import ErrorAlert from "../layout/ErrorAlert";
-import { deleteFinish } from "../utils/api";
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import ErrorAlert from '../layout/ErrorAlert';
+import { deleteFinish } from '../utils/api';
 
 export default function TableCard({ table, loadDashboard, date }) {
   const [finishError, setFinishError] = useState(null);
-
-  const history = useHistory()
+  const history = useHistory();
 
   const handleFinish = (e) => {
     console.log(e.target.value)
@@ -19,11 +18,11 @@ export default function TableCard({ table, loadDashboard, date }) {
         .then(history.push(`/dashboard?date=${date}`))
         .then(loadDashboard())
         .catch(setFinishError);
-      return () => abortController.abort()
+      return () => abortController.abort();
     }
-  };
+  }
 
-  return(
+  return (
     <>
       <div className='card border-secondary mb-3' style={{'width': '18rem'}}>
         <div className='card-header bg-transparent'>Table Name: {table?.table_name}</div>
@@ -32,19 +31,19 @@ export default function TableCard({ table, loadDashboard, date }) {
           <p className='card-text' >Capacity: {table?.capacity}</p>
           <div className='card-footer bg-transparent border-dark'>
             {table?.reservation_id === null 
-            ? null 
-            : <button 
-              type='button' 
-              value={table?.table_id} 
-              onClick={handleFinish} 
-              data-table-id-finish={table?.table_id} 
-              className='btn btn-secondary btn-block'>
-                Finish
-            </button>}
+              ? null 
+              : <button 
+                type='button' 
+                value={table?.table_id} 
+                onClick={handleFinish} 
+                data-table-id-finish={table?.table_id} 
+                className='btn btn-secondary btn-block'>
+                  Finish
+              </button>}
           </div>
           <ErrorAlert error={finishError} />
         </div>
       </div>
     </>
-  )
+  );
 }
