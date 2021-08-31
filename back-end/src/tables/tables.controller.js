@@ -1,5 +1,5 @@
-const service = require('./tables.service')
-const asyncErrorBoundary = require('../errors/asyncErrorBoundary')
+const service = require('./tables.service');
+const asyncErrorBoundary = require('../errors/asyncErrorBoundary');
 const hasProperties = require('../errors/hasProperties');
 const hasRequiredProperties = hasProperties('table_name', 'capacity');
 const hasRequiredUpdateProperties = hasProperties('reservation_id');
@@ -38,7 +38,7 @@ async function tableExists(req, res, next) {
 }
 
 async function reservationExists(req, res, next) {
-  const { reservation_id } = req.body.data
+  const { reservation_id } = req.body.data;
   const reservation = await readReservation(reservation_id);
   if (reservation) {
     res.locals.reservation = reservation;
@@ -48,7 +48,7 @@ async function reservationExists(req, res, next) {
 }
 
 function validateTableName(req, res, next) {
-  const { table_name } = req.body.data
+  const { table_name } = req.body.data;
   if (table_name.length >= 2) {
     return next();
   }
@@ -59,13 +59,13 @@ function validateSufficientCapacity(req, res, next) {
   const { capacity } = res.locals.table;
   const { people } = res.locals.reservation;
   if (people <= capacity) {
-    return next()
+    return next();
   }
   next({ status: 400, message: `capacity less than people` });
 }
 
 function validateCapacity(req, res, next) {
-  const { capacity } = req.body.data
+  const { capacity } = req.body.data;
   if (typeof capacity === 'number') {
     return next();
   }
@@ -108,7 +108,7 @@ async function create(req, res) {
 }
 
 function read(req, res) {
-  res.json({ data: res.locals.table })
+  res.json({ data: res.locals.table });
 }
 
 async function update(req, res) {

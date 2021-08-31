@@ -1,5 +1,5 @@
-const service = require('./reservations.service')
-const asyncErrorBoundary = require('../errors/asyncErrorBoundary')
+const service = require('./reservations.service');
+const asyncErrorBoundary = require('../errors/asyncErrorBoundary');
 const hasProperties = require('../errors/hasProperties');
 const hasRequiredProperties = hasProperties('first_name', 'last_name', 'mobile_number', 'reservation_date', 'reservation_time', 'people');
 const hasRequiredUpdateProperties = hasProperties('status');
@@ -41,8 +41,8 @@ async function reservationExists(req, res, next) {
 }
 
 function validateDate(req, res, next) {
-  const { reservation_date } = req.body.data
-  const date = new Date(reservation_date)
+  const { reservation_date } = req.body.data;
+  const date = new Date(reservation_date);
   if (date.getTime() === date.getTime()) {
     return next();
   }
@@ -50,7 +50,7 @@ function validateDate(req, res, next) {
 }
 
 function validateTime(req, res, next) {
-  const { reservation_time } = req.body.data
+  const { reservation_time } = req.body.data;
   const time = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(reservation_time);
   if (time) {
     return next();
@@ -61,7 +61,7 @@ function validateTime(req, res, next) {
 function validateNotTuesday(req, res, next) {
   const { reservation_date, reservation_time } = req.body.data;
   if (new Date(`${reservation_date} ${reservation_time}`).getDay() !== 2) {
-    return next()
+    return next();
   }
   next({ status: 400, message: `restaurant is closed on Tuesday` });
 }
@@ -69,15 +69,15 @@ function validateNotTuesday(req, res, next) {
 function validateNotPast(req, res, next) {
   const { reservation_date, reservation_time } = req.body.data;
   if (new Date(`${reservation_date} ${reservation_time}`) >= new Date()) {
-    return next()
+    return next();
   }
   next({ status: 400, message: `reservation must be for a future date` });
 }
 
 function validateWorkingHours(req, res, next) {
-  const {reservation_time, reservation_date} = req.body.data
-  const now = new Date(`${reservation_date} ${reservation_time}`)
-  const businessHours = (now.getHours() + (now.getMinutes() / 60)) >= 10.5 && (now.getHours() + (now.getMinutes() / 60)) <= 21.5
+  const {reservation_time, reservation_date} = req.body.data;
+  const now = new Date(`${reservation_date} ${reservation_time}`);
+  const businessHours = (now.getHours() + (now.getMinutes() / 60)) >= 10.5 && (now.getHours() + (now.getMinutes() / 60)) <= 21.5;
     if (businessHours) {
       return next();
     }
@@ -100,14 +100,13 @@ function validateStat(req, res, next) {
   next({ status: 400, message: `reservation status ${status} invalid.`, });
 }
 
-
 function validateStatus(req, res, next) {
   const { status } = req.body.data;
   const validStatus = ['booked', 'seated', 'finished', 'cancelled'];
   if (validStatus.includes(status)) {
     return next();
   }
-  next({ status: 400, message: `status ${status} is not valid` })
+  next({ status: 400, message: `status ${status} is not valid` });
 }
 
 function validateFinished(req, res, next) {
@@ -115,12 +114,11 @@ function validateFinished(req, res, next) {
   if (status !== 'finished') {
     return next();
   }
-  next({ status: 400, message: `status ${status} cannot be updated` })
+  next({ status: 400, message: `status ${status} cannot be updated` });
 }
 
 async function list(req, res) {
   const { date, mobile_number } = req.query;
-
   if (date) {
     res.json({ data: await service.listByDate(date) });
   } else if (mobile_number) {
@@ -136,7 +134,7 @@ async function create(req, res) {
 }
 
 function read(req, res) {
-  res.json({ data: res.locals.reservation })
+  res.json({ data: res.locals.reservation });
 }
 
 async function update(req, res) {
