@@ -148,7 +148,7 @@ describe('US-08 - Change an existing reservation - E2E', () => {
 
     test('canceling form returns to the previous page', async () => {
       const [cancelButton] = await page.$x(
-        '//button[contains(translate(., 'ACDEFGHIJKLMNOPQRSTUVWXYZ', 'acdefghijklmnopqrstuvwxyz'), 'cancel')]'
+        "//button[contains(translate(., 'ACDEFGHIJKLMNOPQRSTUVWXYZ', 'acdefghijklmnopqrstuvwxyz'), 'cancel')]"
       );
 
       if (!cancelButton) {
@@ -179,7 +179,7 @@ describe('US-08 - Change an existing reservation - E2E', () => {
       await firstNameInput.type('John');
 
       const [submitButton] = await page.$x(
-        '//button[contains(translate(., 'ACDEFGHIJKLMNOPQRSTUVWXYZ', 'acdefghijklmnopqrstuvwxyz'), 'submit')]'
+        "//button[contains(translate(., 'ACDEFGHIJKLMNOPQRSTUVWXYZ', 'acdefghijklmnopqrstuvwxyz'), 'submit')]"
       );
 
       if (!submitButton) {
